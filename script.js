@@ -1,88 +1,157 @@
 
-const menuToggle = document.getElementById('menuToggle');
-const navLinks = document.getElementById('navLinks');
+(() => {
+  "use strict";
 
-// Mobile navigation
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
+  // Business WhatsApp number: country code + number, without "+" or spaces.
+  const WHATSAPP_NUMBER = "917758068431";
 
-    menuToggle.setAttribute('aria-expanded', String(isOpen));
-    menuToggle.setAttribute(
-      'aria-label',
-      isOpen ? 'Close navigation menu' : 'Open navigation menu'
-    );
-    menuToggle.textContent = isOpen ? '✕' : '☰';
-  });
+  const DEFAULT_MESSAGE =
+    "Hello Amol, I would like to enquire about Smart Automation and Design services or training.";
 
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      menuToggle.setAttribute('aria-label', 'Open navigation menu');
-      menuToggle.textContent = '☰';
+  // Mobile navigation
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
+      );
+      menuToggle.textContent = isOpen ? "✕" : "☰";
     });
-  });
-}
 
-// Current copyright year
-const year = document.getElementById('year');
-
-if (year) {
-  year.textContent = new Date().getFullYear();
-}
-
-// WhatsApp configuration
-const WHATSAPP_NUMBER = '919960302198';
-
-const defaultMessage =
-  'Hello Smart Automation and Design, I would like to enquire about your services or training.';
-
-function createWhatsAppUrl(message) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-}
-
-function configureWhatsAppLink(link, message) {
-  if (!link) return;
-
-  if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
-    link.removeAttribute('href');
-    return;
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+        menuToggle.textContent = "☰";
+      });
+    });
   }
 
-  link.href = createWhatsAppUrl(message);
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-}
+  // Copyright year
+  const year = document.getElementById("year");
 
-// Main contact button and floating WhatsApp button
-configureWhatsAppLink(
-  document.getElementById('whatsappLink'),
-  defaultMessage
-);
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
+  }
 
-configureWhatsAppLink(
-  document.getElementById('whatsappFloatingLink'),
-  defaultMessage
-);
+  // WhatsApp links
+  function createWhatsAppUrl(message) {
+    return (
+      `https://wa.me/${WHATSAPP_NUMBER}` +
+      `?text=${encodeURIComponent(message || DEFAULT_MESSAGE)}`
+    );
+  }
 
-// Service-specific enquiry links
-document.querySelectorAll('[data-service]').forEach(link => {
-  const service = link.dataset.service;
+  function configureWhatsAppLink(link, message) {
+    if (!link) return;
 
-  configureWhatsAppLink(
-    link,
-    `Hello Smart Automation and Design, I would like to enquire about ${service}. Please share more details.`
-  );
-});
+    if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+      link.removeAttribute("href");
+      return;
+    }
 
-// Course-specific enquiry links
-document.querySelectorAll('[data-course]').forEach(link => {
-  const course = link.dataset.course;
+    link.href = createWhatsAppUrl(message);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  }
 
-  configureWhatsAppLink(
-    link,
-    `Hello Smart Automation and Design, I am interested in ${course}. Please share the course details, fees, duration and upcoming batches.`
-  );
-});
+  // General WhatsApp buttons
+  document.querySelectorAll("[data-whatsapp]").forEach((link) => {
+    configureWhatsAppLink(
+      link,
+      link.getAttribute("data-message") || DEFAULT_MESSAGE
+    );
+  });
 
+  // Service enquiry buttons
+  document.querySelectorAll("[data-service]").forEach((link) => {
+    const service = link.dataset.service;
+
+    configureWhatsAppLink(
+      link,
+      `Hello Amol, I would like to enquire about ${service} from Smart Automation and Design. Please share more details.`
+    );
+  });
+
+  // Course enquiry buttons
+  document.querySelectorAll("[data-course]").forEach((link) => {
+    const course = link.dataset.course;
+
+    configureWhatsAppLink(
+      link,
+      `Hello Amol, I am interested in ${course} at Smart Automation and Design. Please share the course details, fees, duration and upcoming batches.`
+    );
+  });
+
+  // PPPC curriculum popup
+  const modal = document.getElementById("curriculumModal");
+  const openButton = document.getElementById("viewCurriculumBtn");
+
+  const closeButtons = [
+    document.getElementById("closeCurriculumBtn"),
+    document.getElementById("closeCurriculumFooterBtn")
+  ].filter(Boolean);
+
+  let previousFocus = null;
+
+  function openCurriculum() {
+    if (!modal) return;
+
+    previousFocus = document.activeElement;
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+
+    const closeButton = document.getElementById("closeCurriculumBtn");
+
+    if (closeButton) {
+      closeButton.focus();
+    }
+  }
+
+  function closeCurriculum() {
+    if (!modal || modal.hidden) return;
+
+    modal.hidden = true;
+    document.body.style.overflow = "";
+
+    if (previousFocus && typeof previousFocus.focus === "function") {
+      previousFocus.focus();
+    }
+  }
+
+  if (openButton && modal) {
+    openButton.addEventListener("click", openCurriculum);
+  }
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", closeCurriculum);
+  });
+
+  if (modal) {
+    // Close when clicking the dark backdrop
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closeCurriculum();
+      }
+    });
+
+    // Close when the user presses Escape
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.hidden) {
+        closeCurriculum();
+      }
+    });
+
+    // Close the popup when a curriculum enquiry link is selected
+    modal.querySelectorAll("[data-course]").forEach((link) => {
+      link.addEventListener("click", closeCurriculum);
+    });
+  }
+})();

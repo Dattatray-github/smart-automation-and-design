@@ -2,107 +2,87 @@
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 
+// Mobile navigation
 if (menuToggle && navLinks) {
   menuToggle.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', String(open));
-    menuToggle.textContent = open ? '✕' : '☰';
+    const isOpen = navLinks.classList.toggle('open');
+
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute(
+      'aria-label',
+      isOpen ? 'Close navigation menu' : 'Open navigation menu'
+    );
+    menuToggle.textContent = isOpen ? '✕' : '☰';
   });
 
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open navigation menu');
       menuToggle.textContent = '☰';
     });
   });
 }
 
+// Current copyright year
 const year = document.getElementById('year');
-if (year) year.textContent = new Date().getFullYear();
 
-document.querySelectorAll('[data-service]').forEach(link => {
-  link.addEventListener('click', () => {
-    const interest = document.getElementById('interest');
-    if (interest) interest.value = link.dataset.service;
-  });
-});
-
-document.querySelectorAll('[data-course]').forEach(link => {
-  link.addEventListener('click', () => {
-    const interest = document.getElementById('interest');
-    if (interest) {
-      interest.value = link.dataset.course.includes('Training')
-        ? 'Offline Classroom Training'
-        : 'Online Training';
-    }
-  });
-});
-
-const form = document.getElementById('enquiryForm');
-
-if (form) {
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-
-    const data = new FormData(form);
-    const status = document.getElementById('formStatus');
-
-    const businessEmail = ''; // Add your business email here.
-
-    if (!businessEmail) {
-      status.textContent =
-        'Please configure the business email before receiving enquiries.';
-      status.style.color = '#a15c00';
-      return;
-    }
-
-    const subject = encodeURIComponent(
-      'Website enquiry - Smart Automation and Design'
-    );
-
-    const body = encodeURIComponent(
-      `Name: ${data.get('name')}\n` +
-      `Company: ${data.get('company') || 'Not provided'}\n` +
-      `Phone: ${data.get('phone')}\n` +
-      `Email: ${data.get('email') || 'Not provided'}\n` +
-      `Interest: ${data.get('interest')}\n` +
-      `Requirements: ${data.get('message')}`
-    );
-
-    window.location.href =
-      `mailto:${businessEmail}?subject=${subject}&body=${body}`;
-  });
+if (year) {
+  year.textContent = new Date().getFullYear();
 }
 
-
-
-const whatsappLink = document.getElementById('whatsappLink');
-
-if (whatsappLink) {
-  whatsappLink.addEventListener('click', event => {
-    event.preventDefault();
-    document.getElementById('contact')
-      ?.scrollIntoView({ behavior: 'smooth' });
-  });
-               }
-
+// WhatsApp configuration
 const WHATSAPP_NUMBER = '919960302198';
 
-const whatsappLink = document.getElementById('whatsappLink');
+const defaultMessage =
+  'Hello Smart Automation and Design, I would like to enquire about your services or training.';
 
-if (whatsappLink) {
-  const message =
-    'Hello Smart Automation and Design, I would like to enquire about your services or training.';
-
-  if (/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
-    whatsappLink.href =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    whatsappLink.target = '_blank';
-    whatsappLink.rel = 'noopener noreferrer';
-  } else {
-    whatsappLink.removeAttribute('href');
-    whatsappLink.textContent = 'WhatsApp contact coming soon';
-  }
+function createWhatsAppUrl(message) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
+
+function configureWhatsAppLink(link, message) {
+  if (!link) return;
+
+  if (!/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+    link.removeAttribute('href');
+    return;
+  }
+
+  link.href = createWhatsAppUrl(message);
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+}
+
+// Main contact button and floating WhatsApp button
+configureWhatsAppLink(
+  document.getElementById('whatsappLink'),
+  defaultMessage
+);
+
+configureWhatsAppLink(
+  document.getElementById('whatsappFloatingLink'),
+  defaultMessage
+);
+
+// Service-specific enquiry links
+document.querySelectorAll('[data-service]').forEach(link => {
+  const service = link.dataset.service;
+
+  configureWhatsAppLink(
+    link,
+    `Hello Smart Automation and Design, I would like to enquire about ${service}. Please share more details.`
+  );
+});
+
+// Course-specific enquiry links
+document.querySelectorAll('[data-course]').forEach(link => {
+  const course = link.dataset.course;
+
+  configureWhatsAppLink(
+    link,
+    `Hello Smart Automation and Design, I am interested in ${course}. Please share the course details, fees, duration and upcoming batches.`
+  );
+});
+

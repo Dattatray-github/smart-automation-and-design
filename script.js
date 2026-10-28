@@ -75,6 +75,8 @@ if (form) {
   });
 }
 
+
+
 const whatsappLink = document.getElementById('whatsappLink');
 
 if (whatsappLink) {
@@ -84,3 +86,23 @@ if (whatsappLink) {
       ?.scrollIntoView({ behavior: 'smooth' });
   });
                }
+
+const WHATSAPP_NUMBER = '919960302198';
+
+const whatsappLink = document.getElementById('whatsappLink');
+
+if (whatsappLink) {
+  const message =
+    'Hello Smart Automation and Design, I would like to enquire about your services or training.';
+
+  if (/^\d{10,15}$/.test(WHATSAPP_NUMBER)) {
+    whatsappLink.href =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    whatsappLink.target = '_blank';
+    whatsappLink.rel = 'noopener noreferrer';
+  } else {
+    whatsappLink.removeAttribute('href');
+    whatsappLink.textContent = 'WhatsApp contact coming soon';
+  }
+}

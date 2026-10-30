@@ -243,7 +243,7 @@
           "Current Academic Year|select|First Year;Second Year;Third Year;Final Year;Graduate;Working Professional",
           "Interested Training|checks|PLC Programming;HMI and SCADA;Industrial Automation;Electrical Panel Design;Electrical Panel Wiring;VFD and Drives;Industrial Communication;Practical Project Training",
           "Preferred Training Mode|select|Classroom / In-person;Online;Hybrid;To be discussed",
-          "Preferred Duration|select|1–2 Weeks;3–4 Weeks;1–2 Months;More than 2 Months;To be discussed",
+          
           "Preferred Start Date|date"
         ]],
         ["Additional Information", [

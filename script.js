@@ -106,6 +106,7 @@
       sections: [
         ["Company & Contact Details", [
           "Company Name|text|*",
+          "GST Number|text|*",
           "Contact Person Name|text|*",
           "Business Email|email|*",
           "Mobile Number|tel|*",
@@ -115,7 +116,7 @@
           "Panel Type|select*|PLC Control Panel;MCC Panel;PCC Panel;VFD / Drive Panel;Machine Control Panel;Other",
           "Number of Panels Required|number|*",
           "Operating Voltage|select|230 V AC;415 V AC;24 V DC;Other",
-          "Required Work Scope|checks|Power wiring;Control wiring;PLC and I/O wiring;VFD wiring;Ferruling;Panel assembly;Continuity testing;On-site support"
+          "Required Work Scope|checks|Power wiring;Control wiring;PLC and I/O wiring;VFD wiring;Panel assembly;On-site support"
         ]],
         ["Drawings & Schedule", [
           "Electrical Drawings Available|select|Available;Not available;Partially available",
@@ -132,6 +133,7 @@
       sections: [
         ["Company Details", [
           "Company Name|text|*",
+          "GST Number|text|*",
           "Contact Person|text|*",
           "Business Email|email|*",
           "Contact Number|tel|*",
@@ -167,6 +169,7 @@
       sections: [
         ["Company & Contact Details", [
           "Company Name|text|*",
+          "GST Number|text|*",
           "Contact Person|text|*",
           "Business Email|email|*",
           "Contact Number|tel|*",
@@ -202,6 +205,7 @@
       sections: [
         ["Company & Contact Details", [
           "Company Name|text|*",
+          "GST Number|text",
           "Contact Person|text|*",
           "Business Email|email|*",
           "Contact Number|tel|*",

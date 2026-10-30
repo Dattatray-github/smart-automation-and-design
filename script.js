@@ -647,14 +647,24 @@
       }
     });
   }
+  function attachOpenEnquiryTriggers() {
+  document.addEventListener("click", event => {
+    const trigger = event.target.closest("[data-open-enquiry]");
+    if (!trigger) return;
+
+    event.preventDefault();
+    openForm(trigger.dataset.openEnquiry);
+  });
+  }
 
   // Initialize the website features
   function initializeWebsite() {
-    updateServiceCards();
-    updateTraining();
-    ensureEnquiryModal();
-    attachEnquiryEvents();
-    ensureCurriculumPopup();
+  updateServiceCards();
+  updateTraining();
+  ensureEnquiryModal();
+  attachEnquiryEvents();
+  attachOpenEnquiryTriggers();
+  ensureCurriculumPopup();
   }
 
   // Run initialization after the page is ready

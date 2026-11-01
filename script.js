@@ -316,10 +316,15 @@
           data-close-enquiry
         >&times;</button>
 
+        
         <div class="enquiry-modal__header">
-          <p class="enquiry-modal__eyebrow">SMART AUTOMATION AND DESIGN</p>
-          <h2 id="enquiryTitle">Project Enquiry</h2>
-          <p id="enquiryIntro"></p>
+        <div class="enquiry-brand-row">
+         <img src="assets/logo.jpg" alt="Smart Automation and Design logo" class="enquiry-brand-logo" />
+         <p class="enquiry-modal__eyebrow">SMART AUTOMATION AND DESIGN</p>
+        </div>
+
+         <h2 id="enquiryTitle">Project Enquiry</h2>
+         <p id="enquiryIntro"></p>
         </div>
 
         <form id="enquiryForm">

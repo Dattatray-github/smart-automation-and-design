@@ -28,6 +28,7 @@
   box-shadow: 0 24px 80px rgba(0,0,0,.28);
 }
 
+/*
 .enquiry-modal__header {
   display: flex;
   justify-content: space-between;
@@ -36,6 +37,7 @@
   padding-bottom: 18px;
   margin-bottom: 20px;
 }
+*/
 
 .enquiry-modal__header h2 {
   margin: 4px 0 8px;

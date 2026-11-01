@@ -629,7 +629,7 @@
       openForm("student-training");
     });
 
-    trainingSection.appendChild(button);
+  //  trainingSection.appendChild(button);
   }
 
   // Ensure the existing PPPC curriculum popup remains functional

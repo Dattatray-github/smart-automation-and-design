@@ -55,6 +55,43 @@
   color: #1672b8 !important;
 }
 
+//
+.enquiry-modal__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  border-bottom: 1px solid #e5ebf0;
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+}
+
+.enquiry-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.enquiry-brand-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.enquiry-modal__header h2,
+.enquiry-modal__header p {
+  margin: 0;
+}
+
+.enquiry-modal__eyebrow {
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: #1672b8 !important;
+}
+
+//
+
 .enquiry-modal__close {
   border: 0;
   background: #eef3f7;

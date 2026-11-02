@@ -683,5 +683,19 @@
     initializeWebsite();
   }
 
+  const gallery = $("#projectGallery");
+  const prevBtn = $(".gallery-prev");
+  const nextBtn = $(".gallery-next");
+
+  if (gallery && prevBtn && nextBtn) {
+    prevBtn.addEventListener("click", () => {
+      gallery.scrollBy({ left: -340, behavior: "smooth" });
+    });
+
+    nextBtn.addEventListener("click", () => {
+      gallery.scrollBy({ left: 340, behavior: "smooth" });
+    });
+  }
+
 })();
     
